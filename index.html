@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InicInvest — Simulação de investimento</title>
+  <link rel="stylesheet" href="css/tailwind.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="p-3 md:p-6 lg:p-10">
+
+  <div class="max-w-6xl mx-auto fade-up">
+
+    <!-- Cabeçalho com a marca -->
+    <header class="flex items-center justify-between mb-6 md:mb-8">
+      <img src="img/logo.png" alt="InicInvest" class="h-10 md:h-12 object-contain" />
+      <div class="hidden sm:flex items-center gap-2 bg-white shadow rounded-full px-3 py-1.5">
+        <span class="text-sm font-medium text-[color:var(--text-dark)]">João Silva</span>
+        <span class="w-8 h-8 rounded-full bg-[color:var(--navy-700)] text-white grid place-items-center text-xs">JS</span>
+      </div>
+    </header>
+
+    <!-- Painel principal -->
+    <main class="content-panel p-6 md:p-10">
+      <div class="mb-6">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-[color:var(--text-dark)]">Simulação de investimento</h1>
+        <p class="text-[color:var(--text-muted)] mt-2">Descubra quanto seu dinheiro pode render ao longo do tempo</p>
+      </div>
+
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Formulário -->
+        <div class="card-base p-6 md:p-7">
+          <h2 class="text-xl font-bold mb-5 text-[color:var(--text-dark)]">Preencha os dados</h2>
+
+          <label class="text-sm font-medium" for="valorInicial">Valor inicial</label>
+          <div class="input-field flex items-center gap-2 mt-1 mb-4">
+            <span class="text-slate-400">$</span>
+            <input id="valorInicial" type="text" inputmode="numeric" class="flex-1 outline-none bg-transparent" value="R$ 5.000">
+          </div>
+
+          <label class="text-sm font-medium" for="aporte">Aporte mensal</label>
+          <div class="input-field flex items-center gap-2 mt-1 mb-4">
+            <span class="text-slate-400">$</span>
+            <input id="aporte" type="text" inputmode="numeric" class="flex-1 outline-none bg-transparent" value="R$ 500">
+          </div>
+
+          <label class="text-sm font-medium" for="prazo">Prazo (meses)</label>
+          <div class="input-field flex items-center gap-2 mt-1 mb-4">
+            <span class="text-slate-400">⏱</span>
+            <input id="prazo" type="number" min="1" max="600" class="flex-1 outline-none bg-transparent" value="24">
+          </div>
+
+          <label class="text-sm font-medium" for="tipo">Tipo de investimento</label>
+          <div class="input-field flex items-center gap-2 mt-1 mb-6">
+            <span class="text-slate-400">⌄</span>
+            <select id="tipo" class="flex-1 outline-none bg-transparent cursor-pointer">
+              <option value="0.1175">Tesouro Selic (11,75% a.a.)</option>
+              <option value="0.12">LCI Banco Inter (12% a.a.)</option>
+              <option value="0.0968">Fundo Imobiliário XP (9,68% a.a.)</option>
+              <option value="0.18">Ações Petrobras (18% a.a.)</option>
+              <option value="0.33">Criptomoedas (33% a.a.)</option>
+              <option value="0.15">CDB Banco XP (15% a.a.)</option>
+            </select>
+          </div>
+
+          <button id="btnSimular" type="button" class="btn-teal w-full py-3 rounded-xl font-semibold">📈 Simular</button>
+        </div>
+
+        <!-- Resultado -->
+        <div class="card-base p-6 md:p-7">
+          <h2 class="text-xl font-bold mb-5 text-[color:var(--text-dark)]">Resultado estimado</h2>
+          <div class="grid grid-cols-3 gap-3 text-center">
+            <div class="bg-slate-50 rounded-xl p-3"><p class="text-sm font-semibold">Valor investido</p><p id="rInvestido" class="font-bold mt-1">R$ 17.000</p></div>
+            <div class="bg-slate-50 rounded-xl p-3"><p class="text-sm font-semibold">Rentabilidade estimada</p><p id="rJuros" class="font-bold mt-1">R$ 2.840</p></div>
+            <div class="bg-teal-50 rounded-xl p-3"><p class="text-sm font-semibold text-[color:var(--teal-400)]">Total acumulado</p><p id="rTotal" class="font-bold mt-1 text-[color:var(--teal-400)]">R$ 19.840</p></div>
+          </div>
+
+          <svg id="grafico" viewBox="0 0 360 180" class="w-full mt-6">
+            <defs>
+              <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#34c77b" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#34c77b" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line x1="30" y1="150" x2="340" y2="150" stroke="#e2e8f0"/>
+            <polyline id="gArea" points="" fill="url(#fill)"/>
+            <polyline id="gLine" points="" fill="none" stroke="#1f9d55" stroke-width="3"/>
+            <g id="gDots"></g>
+          </svg>
+
+          <p class="text-center text-sm text-[color:var(--text-muted)] mt-4">
+            Com esse cenário, seu patrimônio pode atingir
+            <span id="rFrase" class="text-[color:var(--green-600)] font-semibold">R$ 19.840</span>
+            em <span id="rPrazo">24</span> meses.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <p class="text-center text-xs text-slate-400 mt-6">InicInvest — Plataforma de Investimentos</p>
+  </div>
+
+  <script src="js/simulacao.js"></script>
+</body>
+</html>
