@@ -2,8 +2,6 @@
 
 Tela de **Simulação de Investimento** da plataforma fintech **InicInvest**, desenvolvida com **HTML, CSS e Tailwind CSS**.
 
-## 🚀 Como executar
-Abra o arquivo **`index.html`** em qualquer navegador. Não é necessário servidor nem internet — o Tailwind CSS já está compilado localmente em `css/tailwind.css`.
 
 ## 🗂️ Estrutura
 ```
